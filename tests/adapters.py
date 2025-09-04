@@ -4,7 +4,7 @@ import os
 import re
 from typing import Any
 
-from cs336_data import data
+from cs336_data import data, train_quality_classifier
 
 
 def run_extract_text_from_html_bytes(html_bytes: bytes) -> str | None:
@@ -28,25 +28,25 @@ def run_mask_ips(text: str) -> tuple[str, int]:
 
 
 def run_classify_nsfw(text: str) -> tuple[Any, float]:
-    raise NotImplementedError
+    return data.classify_nsfw(text)
 
 
 def run_classify_toxic_speech(text: str) -> tuple[Any, float]:
-    raise NotImplementedError
+    return data.classify_toxic_speech(text)
 
 
 def run_classify_quality(text: str) -> tuple[Any, float]:
-    raise NotImplementedError
+    return data.classify_quality(text)
 
 
 def run_gopher_quality_filter(text: str) -> bool:
-    raise NotImplementedError
+    return data.gopher_quality_filters(text)
 
 
 def run_exact_line_deduplication(
     input_files: list[os.PathLike], output_directory: os.PathLike
 ):
-    raise NotImplementedError
+    return data.exact_line_deduplication(input_files, output_directory)
 
 
 def run_minhash_deduplication(
@@ -57,4 +57,11 @@ def run_minhash_deduplication(
     jaccard_threshold: float,
     output_directory: os.PathLike,
 ):
-    raise NotImplementedError
+    data.minhash_deduplication(
+        input_files,
+        num_hashes,
+        num_bands,
+        ngrams,
+        jaccard_threshold,
+        output_directory,
+    )
